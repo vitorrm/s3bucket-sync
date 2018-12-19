@@ -1,0 +1,47 @@
+service: s3bucket-sync
+custom:
+  config: ${file(./config/${opt:stage}.js):config}
+  empty: ""
+  commit-description: "commit: ${env:commit,self:custom.empty} branch: ${env:branch,self:custom.empty}"
+  browserify:
+    exclude:
+      - aws-sdk
+  region: us-east-1
+provider:
+  name: aws
+  runtime: nodejs8.10
+  memorySize: 1024
+  timeout: 15
+  environment:
+    LOG_LEVEL: ${self:custom.config.LogLevel}
+    NODE_ENV: ${opt:stage}
+    DEST_BUCKET: ${opt:dest-bucket}
+    SRC_BUCKET: ${opt:src-bucket}
+  iamRoleStatements: ${file(./services-config/iam/roleStatements.yaml)}
+
+package:
+  individually: true
+  include:
+    - config
+
+plugins:
+  - serverless-plugin-browserifier
+
+functions:
+  syncBuckets:
+    handler: functions/syncBuckets/handler.handler
+
+resources:
+  Outputs:
+    SyncBucketsLambdaArn:
+      Value:
+        'Fn::GetAtt': [ 'SyncBucketsLambdaFunction', 'Arn' ]
+      Export:
+        Name: SyncBucketsLambdaArn
+    SyncBucketsRoleArn:
+      Value:
+        'Fn::GetAtt': [ 'IamRoleLambdaExecution', 'Arn' ]
+      Export:
+        Name: SyncBucketsRoleArn
+
+

@@ -1,0 +1,24 @@
+- Effect: Allow
+  Action:
+  - logs:CreateLogGroup
+  - logs:CreateLogStream
+  - logs:PutLogEvents
+  Resource: arn:aws:logs:*:*:*
+- Effect: Allow
+  Action:
+  - s3:ListBucket
+  - s3:GetObject
+  Resource:
+  - "arn:aws:s3:::${opt:src-bucket}"
+  - "arn:aws:s3:::${opt:src-bucket}/*"
+- Effect: Allow
+  Action:
+  - s3:ListBucket
+  - s3:PutObject
+  - s3:DeleteObject
+  - s3:PutObjectAcl
+  Resource:
+  - "arn:aws:s3:::${opt:dest-bucket}"
+  - "arn:aws:s3:::${opt:dest-bucket}/*"
+
+

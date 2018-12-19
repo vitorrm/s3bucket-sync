@@ -1,0 +1,13 @@
+# package directories
+node_modules
+
+# Serverless directories
+.serverless
+
+#Output directories
+/out/
+
+eslint.html
+
+.eslintcache
+.vscode
