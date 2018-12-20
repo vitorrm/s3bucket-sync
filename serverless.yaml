@@ -15,8 +15,8 @@ provider:
   environment:
     LOG_LEVEL: ${self:custom.config.LogLevel}
     NODE_ENV: ${opt:stage}
-    DEST_BUCKET: ${opt:dest-bucket}
-    SRC_BUCKET: ${opt:src-bucket}
+    DEST_BUCKET: ${self:custom.config.DestBucket}
+    SRC_BUCKET: ${self:custom.config.SrcBucket}
   iamRoleStatements: ${file(./services-config/iam/roleStatements.yaml)}
 
 package:

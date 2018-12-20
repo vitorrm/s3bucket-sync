@@ -9,7 +9,7 @@ You can use this example to configure your own application
 npm install
 
 # Deploying the sync function
-sls deploy --stage <stage> --src-bucket <sourceBucketName> --dest-bucket <destinationBucketName> --aws-profile <sourceAccount>
+sls deploy --stage <stage> --aws-profile <sourceAccount>
 
 # Getting the deployed function's role's ARN (syncLambdaRoleArn)
 aws cloudformation describe-stacks --stack-name s3bucket-sync-<stage> --query 'Stacks[0].Outputs[?OutputKey==`SyncBucketsRoleArn`].OutputValue' --output text --profile <sourceAccount>
