@@ -13,12 +13,12 @@ async function main () {
 	const destBucketName = config.DestBucket
 	const lambdaRoleArn = argv['lambda-role-arn']
 
-	const currentPolicy = await getCurrentPolicy(lambdaRoleArn)
-	await addNewPolicy(lambdaRoleArn, destBucketName, currentPolicy)
+	await addNewPolicy(lambdaRoleArn, destBucketName)
 }
 
-async function addNewPolicy (lambdaRoleArn, destBucketName, currentPolicy) {
-	const putCrossStatement = {
+async function addNewPolicy (lambdaRoleArn, destBucketName) {
+	const currentPolicy = await getCurrentPolicy(destBucketName)
+	const putCrossAccountStatement = {
 		Sid: 'Allow PUT/DELETE from Source-Account',
 		Effect: 'Allow',
 		Principal: {
@@ -36,12 +36,12 @@ async function addNewPolicy (lambdaRoleArn, destBucketName, currentPolicy) {
 	}
 	let policy
 	if (currentPolicy && currentPolicy.Statement) {
-		policy = currentPolicy.Statement.push(putCrossStatement)
+		policy = currentPolicy.Statement.push(putCrossAccountStatement)
 	} else {
 		policy = {
 			Version: '2008-10-17',
 			Statement: [
-				putCrossStatement
+				putCrossAccountStatement
 			]
 		}
 	}
@@ -53,9 +53,9 @@ async function addNewPolicy (lambdaRoleArn, destBucketName, currentPolicy) {
 	await s3.putBucketPolicy(params).promise()
 }
 
-async function getCurrentPolicy (lambdaRoleArn) {
+async function getCurrentPolicy (destBucketName) {
 	const policy = await s3.getBucketPolicy({
-		Bucket: lambdaRoleArn
+		Bucket: destBucketName
 	}).promise()
 
 	try {
