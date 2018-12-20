@@ -9,8 +9,8 @@
   - s3:ListBucket
   - s3:GetObject
   Resource:
-  - "arn:aws:s3:::${opt:src-bucket}"
-  - "arn:aws:s3:::${opt:src-bucket}/*"
+  - "arn:aws:s3:::${self:custom.config.SrcBucket}"
+  - "arn:aws:s3:::${self:custom.config.SrcBucket}/*"
 - Effect: Allow
   Action:
   - s3:ListBucket
@@ -18,7 +18,7 @@
   - s3:DeleteObject
   - s3:PutObjectAcl
   Resource:
-  - "arn:aws:s3:::${opt:dest-bucket}"
-  - "arn:aws:s3:::${opt:dest-bucket}/*"
+  - "arn:aws:s3:::${self:custom.config.DestBucket}"
+  - "arn:aws:s3:::${self:custom.config.DestBucket}/*"
 
 
