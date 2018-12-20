@@ -51,7 +51,7 @@ async function addPermissionToInvokeLambda ({ srcBucketName, lambdaArn }) {
 		Action: 'lambda:InvokeFunction',
 		FunctionName: lambdaArn,
 		Principal: 's3.amazonaws.com',
-		SourceArn: `arn:aws:s3:::${srcBucketName}/*`,
+		SourceArn: `arn:aws:s3:::${srcBucketName}`,
 		StatementId: `ID-S3Invoke-${randomPostFix}`
 	}
 
