@@ -36,7 +36,8 @@ async function addNewPolicy (lambdaRoleArn, destBucketName) {
 	}
 	let policy
 	if (currentPolicy && currentPolicy.Statement) {
-		policy = currentPolicy.Statement.push(putCrossAccountStatement)
+		currentPolicy.Statement.push(putCrossAccountStatement)
+		policy = currentPolicy
 	} else {
 		policy = {
 			Version: '2008-10-17',
