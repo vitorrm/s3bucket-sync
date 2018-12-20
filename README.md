@@ -16,13 +16,13 @@ aws cloudformation describe-stacks --stack-name s3bucket-sync-<stage> --query 'S
 
 # Adding cross role policy permissions in destination bucket
 # **Important** The policy in the destination bucket will be replaced with this command. Do it manually if you already have a policy you wanna keep
-AWS_PROFILE=<destinationAccount> NODE_ENV=<stage> node node configDestBucket.js --lambda-role-arn <syncLambdaRoleArn>
+AWS_PROFILE=<destinationAccount> NODE_ENV=<stage> node configDestBucket.js --lambda-role-arn <syncLambdaRoleArn>
 
 # Getting the deployed function's ARN (syncLambdaArn)
 aws cloudformation describe-stacks --stack-name s3bucket-sync-<stage> --query 'Stacks[0].Outputs[?OutputKey==`SyncBucketsLambdaArn`].OutputValue' --output text --profile <sourceAccount>
 
 # Adding Lambda notification configuration
-AWS_PROFILE=<sourceAccount> NODE_ENV=<stage> node node configSrcBucket.js --lambda-arn <syncLambdaArn>
+AWS_PROFILE=<sourceAccount> NODE_ENV=<stage> node configSrcBucket.js --lambda-arn <syncLambdaArn>
 
 
 ```
