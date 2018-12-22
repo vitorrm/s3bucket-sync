@@ -1,5 +1,5 @@
 # Overview
-This projects has an example of a lambda that replicates the content from one S3 bucket (source) to S3 another (destination) in a different account
+This projects has an example of a lambda that replicates the content from one S3 bucket (source) to another S3 bucket (destination) in a different account
 
 You can use this example to configure your own application
 
